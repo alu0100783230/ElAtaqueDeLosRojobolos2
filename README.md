@@ -27,8 +27,8 @@ que estos poseen a fin de obtener el mejor rendimiento posible. De esta forma,
 a pesar de que las paredes del laberinto son copias de elementos de dimensión
 x=1 y z=1, estos no poseen box colliders asociados, sino que se generan aparte
 como prismas rectangulares que tratan de contenter el mayor área posible.
-De esta forma, los objetos relacionados con los cálculos de físicas y navegación
-se han minimizado.
+Como resultado se consigue que los objetos relacionados con los cálculos de físicas
+y navegación sean mínimos.
 
  - ![](1.jpg) 	
 
@@ -75,8 +75,10 @@ Esta comprobación con una fracuencia determinada en una `corutina` en lugar
 de a cada frame en la función `Upadate()` pensando en las limitaciones 
 anteriormente mencionadas. 
 
-- Aspectos destacados 
-- Gif
+- Capacidad de disparo por parte del jugador: Sujeta a una cantidad de munición
+finita que peude ser recargada mediante objetos recogibles en el mapa.
+
+- 
 
 ### Acuerdo
 Antes de abordar el reparto de tareas como tal, debemos comentar algunas 
@@ -84,7 +86,7 @@ restricciones y problemas a los que tuvimos que enfrentarnos.
 
 ## Restricciones
 - Tiempo.
-- Soporte de Unity en Linux: La versión actual del editor de Unity para linux
+- Soporte de Unity en Linux: La versión actual del editor de Unity para GNU/Linux
 no permite la exportación a cualquier plataforma diferente al propio sistema
 anfitrión. Así mismo, no permitía emular los sensores requeridos por la 
 realdiad virtual, lo que imposibilitaba el testeo de uno de los miembros.
@@ -97,14 +99,14 @@ emplearía realidad virtual mientras la otra usaría el prerfab de fps. Además
 de eso, establecimos las siguientes reglas:
 
 - Ningún objeto sería colocado manualmente en el mapa y la generación de 
-todos los elementos estaría guiada por scripts y parámetros en lso prefabs.
+todos los elementos estaría guiada por scripts y parámetros en los prefabs.
 Conseguiríamos que todos los cambios ocurriesen en ambas escenas a la par.
 
 - No se usaría ningún prefab hasta haber terminado la lógica del juego, y
 estos se utilizarían como elementos anidados a nuestros propios prefab.
 Evitamos así tener que readaptar en exceso los scripts una vez se decidieran
 añadir los elementos artísticos así como mantener el proyecto muy ligero
-(commits y pulls más rápidos) además de impedir la fijación en los detalles.
+(commits y pulls más rápidos) además de impedir la fijación en los detalles. 
 
 - Daniel:
 	- Creación del sistema generador de mapas y sus optimizaciones asociadas
@@ -118,3 +120,4 @@ añadir los elementos artísticos así como mantener el proyecto muy ligero
 	- Implementación de la realidad virtual.
 	- Creación de las build de android.
 	- Búsqueda de prefabs y arte
+
