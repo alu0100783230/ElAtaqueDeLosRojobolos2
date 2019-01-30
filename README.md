@@ -1,5 +1,8 @@
 # El ataque de los Rojobolos II 
-
+El ataque de los rojobolos 2 es un juego en primera persona compatible con gafas de realidad virtual 
+en el cuál encarnas a un soldado que despierta encerrado en una prisión de rojobolotrón, sin 
+recordar nada pero inexplicablemente equipado con un arma. Sin embargo, su huida no será fácil, 
+pues habrá de enfrentarse a los temibles guardianes que custodian a los presos, los cuales, inexplicablemente, no son rojos ni esféricos. 
 
 ## Hitos de programación
 - Generación de mapa procedural: Se ha programado un script capaz de generar
@@ -70,7 +73,16 @@ anteriormente mencionadas.
 - Capacidad de disparo por parte del jugador: Sujeta a una cantidad de munición
 finita que peude ser recargada mediante objetos recogibles en el mapa.
 
-- 
+
+## Recursos de terceros
+Se han empleado los siguientes plugins / prefabs de la Unity Asset Store:
+
+- AmmoBox: Objeto caja de munición en el mapa.
+- Basement_And_Sewerage_Modular_Location: Objetos empleados en los muros, suelo y props.
+- GoogleVR
+- JMO Assets: Sistemas de partículas para explosiones y flashes.
+- PopupAsylum: Modelos y animaciones de los enemigos.
+- SurvivalPack: Objeto botiquín en el mapa.
 
 ### Acuerdo
 Antes de abordar el reparto de tareas como tal, debemos comentar algunas 
