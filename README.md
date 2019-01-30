@@ -1,4 +1,4 @@
-# El ataque ede los bolorojos 
+# El ataque de los Rojobolos II 
 
 
 ## Hitos de programación
@@ -30,7 +30,7 @@ como prismas rectangulares que tratan de contenter el mayor área posible.
 Como resultado se consigue que los objetos relacionados con los cálculos de físicas
 y navegación sean mínimos.
 
- - ![](1.jpg) 	
+ - ![](pics/1.jpg)
 
 - Adición de capacidad de manipulación de objetos físicos al jugador: Tal 
 y como sugiere el nombre, el personaje del juego tiene la capacidad de
@@ -44,15 +44,7 @@ grado de realismo. Estos no se mueven aleatoriamente por el mapa o,
 por el contrario, conocen en todo momento la posición del jugador. Sino 
 que se rigen por las siguientes reglas.
 
-```mermaid
-	graph TD;
-	A{Hay un objetivo marcado?}--Sí-->B{El jugador es visible?}
-	A--No-->E{El jugador es visible?}	
-	B--Sí-->C(Actualizar el objetivo a la posición del jugador)
-	B--No-->D(Seguir moviéndose hacia el objetivo)
-	E--Sí-->C
-	E--No-->F(Elegir como objetivo el punto visible más alejado posible)
-```
+ - ![](pics/2.png)
 
 - Con esto se consigue que el agente siga al jugador siemrpe que lo pueda ver y 
 en caso de perderlo de vista se mueva hasta la última posición conocida en la 
