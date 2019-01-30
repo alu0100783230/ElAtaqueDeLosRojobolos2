@@ -4,6 +4,8 @@ en el cuál encarnas a un soldado que despierta encerrado en una prisión de roj
 recordar nada pero inexplicablemente equipado con un arma. Sin embargo, su huida no será fácil, 
 pues habrá de enfrentarse a los temibles guardianes que custodian a los presos, los cuales, inexplicablemente, no son rojos ni esféricos. 
 
+![](pics/animation.gif)
+
 ## Hitos de programación
 - Generación de mapa procedural: Se ha programado un script capaz de generar
 laberintos de forma procedural sujeto a los ajustes descritos en una serie 
@@ -84,16 +86,23 @@ Se han empleado los siguientes plugins / prefabs de la Unity Asset Store:
 - PopupAsylum: Modelos y animaciones de los enemigos.
 - SurvivalPack: Objeto botiquín en el mapa.
 
+### Otros recursos
+- Los efectos de sonido se han extraido de multitud de vídeos de recopilación de efectos especiales.
+- La banda sonora es la canión "Dust of Saturn" del grupo "Dynatron".
+
 ### Acuerdo
 Antes de abordar el reparto de tareas como tal, debemos comentar algunas 
 restricciones y problemas a los que tuvimos que enfrentarnos.
 
 ## Restricciones
-- Tiempo.
+- Tiempo de desarrollo.
 - Soporte de Unity en Linux: La versión actual del editor de Unity para GNU/Linux
 no permite la exportación a cualquier plataforma diferente al propio sistema
 anfitrión. Así mismo, no permitía emular los sensores requeridos por la 
 realdiad virtual, lo que imposibilitaba el testeo de uno de los miembros.
+- Problemas con el bakeo de los navmesh. Se perdió mucho tiempo y esfuerzo en intentar bakear 
+en tiempo de ejecución el navmesh del suelo para poder instanciar el mapa al completo. FInalmente 
+se debió optar por el uso de un plano pre situado en el editor manualmente.
 
 ## Metodología
 Debido a esto, decidimos emplear una estrategia que nos permitiera iteraciones 
