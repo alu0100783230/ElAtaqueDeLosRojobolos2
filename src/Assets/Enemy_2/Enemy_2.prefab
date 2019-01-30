@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzle_flash: {fileID: 607268054056203612}
-  damage_per_attack: 1
+  damage_per_attack: 0.5
   life: 40
   destination: {x: 0, y: 0, z: 0}
 --- !u!111 &4884979578365386711

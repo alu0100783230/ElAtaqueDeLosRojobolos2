@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Manages the flying drone.
+ *
+ * The system uses a navmesh to move the agent and several raycasts
+ * to obtain information about it's environment.
+ *
+ * This enemy tries to shoot the player keeping some distance.
+ */
 public class Enemy2 : MonoBehaviour {
 
     public GameObject muzzle_flash;
@@ -20,6 +27,7 @@ public class Enemy2 : MonoBehaviour {
 
     private AudioSource audio_shoot;
 
+    // Start is called before the first frame update
     void Awake () {
       GameController.informPlayer += onInformPlayer;
       agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -36,11 +44,18 @@ public class Enemy2 : MonoBehaviour {
     // Update is called once per frame
     void Update() {}
 
+    // Agent's AI is started when this is called
     void onInformPlayer (GameObject p) {
       player = p;
       StartCoroutine(onHandleIa());
     }
 
+    /* Check if the player is visible using a raycast oriented to him and
+     * then checkng the tag asociated to the collider reached.
+     *
+     * If the player is visible the agent move torwads him. When is 15 units
+     * far, also starts shooting (raycast hit).
+     * */
     void onLookPlayer () {
       RaycastHit hit;
       Vector3 dir = player.transform.position - transform.position;
@@ -60,6 +75,9 @@ public class Enemy2 : MonoBehaviour {
       onStopShooting();
     }
 
+    /* Shoot 24 raycast 360º araound the agent to obtain the farest
+     * point in sight.
+     * */
     void onExplore () {
       Vector3 aux_vec = new Vector3(1, 0, 0);
       Vector3 best_target = agent.transform.position;
@@ -81,11 +99,13 @@ public class Enemy2 : MonoBehaviour {
       agent.destination = best_target;
     }
 
+    // Handle the shooting FX
     void onStopShooting () {
       particles.transform.GetChild (1).SendMessage ("onStop");
       audio_shoot.Stop();
     }
 
+    // Handle the shooting FX and Player's damage.
     void onShootPlayer () {
       particles.Play();
       particles.transform.GetChild (1).SendMessage ("onStart");
@@ -93,6 +113,7 @@ public class Enemy2 : MonoBehaviour {
       GameController.onDecreaseLife (damage_per_attack);
     }
 
+    // Handles the damage caused by the player
     void onGetDamage (float damage) {
       if (damage < life)
         life -= damage;
@@ -100,6 +121,9 @@ public class Enemy2 : MonoBehaviour {
         Destroy(gameObject, 0);
     }
 
+    /* This coroutine handles AI every 0.5 seconds, avoiding the performance cost of
+     * doing so in the Update function.
+     * */
     IEnumerator onHandleIa () {
       for (;;) {
         onLookPlayer();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Simply in game health item
 public class Health : MonoBehaviour
 {
     public float ammount;

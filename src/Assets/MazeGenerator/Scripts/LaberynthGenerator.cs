@@ -8,6 +8,7 @@ enum MatrixTypes : uint {
   EMPTY
 };
 
+// Represents a map as a 2 dimension matrix of MatrisTypes
 public struct Maze {
   public uint width;
   public uint height;
@@ -59,6 +60,7 @@ public struct Maze {
 
 };
 
+// Inter calculation needed struct
 public struct Limits {
   public uint x_0;
   public uint x_1;
@@ -108,6 +110,8 @@ public class LaberynthGenerator : MonoBehaviour
 
     public uint min_chamber_size_x = 1;
     public uint min_chamber_size_y = 1;
+
+    // BEGIN OF GENERATION ALGORITHM FUNCTIONS
 
     private int create_passage_y (Maze maze, uint y_0, uint y_1, uint x) {
       if ((y_1 - y_0) > 2) {
@@ -229,6 +233,10 @@ public class LaberynthGenerator : MonoBehaviour
       public Point a;
       public Point b;
     };
+
+    // END OF GENERATION ALGORITHM FUNCTIONS
+
+    // BEGIN OF OPTIMIZATION ALGORITHM FUNCTIONS
 
     bool has_adjacent_node_left (Maze maze, uint x, uint y) {
       if (x > 0)
@@ -376,8 +384,10 @@ public class LaberynthGenerator : MonoBehaviour
         explore_right (maze, areas, x, y);
     }
 
+    // END OF OPTIMIZATION ALGORITHM FUNCTIONS
 
-    Maze GenerateLaberynth () {
+    // Triggerer of the whole generation - optimization - instantiation process
+    public Maze GenerateLaberynth () {
       Maze maze = new Maze (width, height);
 
       int open_x = (int) Random.Range (3, width  - 3);
@@ -397,14 +407,15 @@ public class LaberynthGenerator : MonoBehaviour
       return maze;
     }
 
-
-    GameObject instanceElement (float x, float y, float z, GameObject obj) {
+    // Generic instantiator
+    private GameObject instanceElement (float x, float y, float z, GameObject obj) {
       var i_element = Instantiate (obj);
       i_element.transform.position = new Vector3(x, y, z);
       return i_element;
     }
 
-    GameObject tryToPopulate (float x, float y) {
+    // Randomly call to instantiation of props
+    private GameObject tryToPopulate (float x, float y) {
 
       for (uint i = 0; i < probabilities.Length; i++) {
         float val = Random.Range (0.0f, 1.0f);
@@ -414,7 +425,8 @@ public class LaberynthGenerator : MonoBehaviour
       return null;
     }
 
-    void InstantiateProps (Maze maze) {
+    // Instantiates the random props in the empty places of the laberynth
+    private void InstantiateProps (Maze maze) {
       var grouper_p = Instantiate (new GameObject("props_group"));
       grouper_p.transform.parent = transform;
 
@@ -432,7 +444,8 @@ public class LaberynthGenerator : MonoBehaviour
       }
     }
 
-    void InstantiateLaberynth (Maze maze) {
+    // Instantiates the walls as described in the Maze struct passed
+    private void InstantiateLaberynth (Maze maze) {
       // As the elements are square any compontent of the vector should work
 
       var grouper_w = Instantiate (new GameObject("walls_group"));
@@ -453,9 +466,6 @@ public class LaberynthGenerator : MonoBehaviour
         }
       }
 
-      //floor.transform.position = new Vector3 (0, +0.01f, 0);
-
-
       float floor_size = Floor_tiles[0].GetComponentsInChildren<MeshFilter>()[0].sharedMesh.bounds.size.x;
       // FLoor
       uint h_piceces = (uint) (maze.width  * size / floor_size);
@@ -471,7 +481,8 @@ public class LaberynthGenerator : MonoBehaviour
     }
 
 
-    void InstantiateAreas (List<Area> areas) {
+    // Instantiates optimized areas as described in the Area list passed.
+    private void InstantiateAreas (List<Area> areas) {
 
       var grouper = Instantiate (new GameObject("areas_group"));
       grouper.transform.parent = transform;

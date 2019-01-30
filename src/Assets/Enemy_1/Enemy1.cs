@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Manages the flying drone.
+ *
+ * The system uses a navmesh to move the agent and several raycasts
+ * to obtain information about it's environment.
+ *
+ * This enemy tries to collide with the player and then explodes.
+ */
 public class Enemy1 : MonoBehaviour {
 
     public float damage_per_attack = 20;
@@ -29,11 +36,17 @@ public class Enemy1 : MonoBehaviour {
     // Update is called once per frame
     void Update() {}
 
+    // Agent's AI is started when this is called
     void onInformPlayer (GameObject p) {
       player = p;
       StartCoroutine(onHandleIa());
     }
 
+    /* Check if the player is visible using a raycast oriented to him and
+     * then checkng the tag asociated to the collider reached.
+     *
+     * If the player is visible the agent move torwads him.
+     * */
     void onLookPlayer () {
       RaycastHit hit;
       Vector3 dir = player.transform.position - transform.position;
@@ -47,6 +60,9 @@ public class Enemy1 : MonoBehaviour {
       }
     }
 
+    /* Shoot 24 raycast 360º araound the agent to obtain the farest
+     * point in sight.
+     * */
     void onExplore () {
 
       Vector3 aux_vec = new Vector3(1, 0, 0);
@@ -70,7 +86,7 @@ public class Enemy1 : MonoBehaviour {
       agent.destination = best_target;
     }
 
-
+    // Handle the collision and explosion with the player
     void OnCollisionEnter (Collision col) {
       if(col.gameObject.tag == "Player" && can_attack) {
         GameController.onDecreaseLife (damage_per_attack);
@@ -80,6 +96,7 @@ public class Enemy1 : MonoBehaviour {
       }
     }
 
+    // Handles the damage caused by the player
     void onGetDamage (float damage) {
       if (damage < life)
         life -= damage;
@@ -87,6 +104,9 @@ public class Enemy1 : MonoBehaviour {
         Destroy(gameObject, 0);
     }
 
+    /* This coroutine handles AI every 0.5 seconds, avoiding the performance cost of
+     * doing so in the Update function.
+     * */
     IEnumerator onHandleIa () {
       for (;;) {
         onLookPlayer();

@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This class manages both weapon and physic manipulation systems for the player.
+ *
+ * It should be attached as a child of the camera in order to inherit it's
+ * orientation and avoid using special raycast types.
+ *
+ * */
 public class Weapon : MonoBehaviour {
   public float shoot_damage = 10;
   public uint ammo_per_shot = 1;
@@ -23,14 +29,19 @@ public class Weapon : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Alpha0))
+      if (Input.GetKeyDown(KeyCode.JoystickButton2) || Input.GetKeyDown(KeyCode.E))
         onHandleShoot();
-      else if (Input.GetKeyDown(KeyCode.Alpha1))
+      else if (Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.Q))
         onHandlePick();
-      else if (Input.GetKeyUp(KeyCode.Alpha1))
+      else if (Input.GetKeyUp(KeyCode.JoystickButton1) || Input.GetKeyUp(KeyCode.Q))
         onHandleUnpick();
     }
 
+    /* Handle the intention of picking physics objects. A raycast is used to
+     * to obtain the object which the player is trying to pick.
+     *
+     * A joint is used to actually pick the object.
+     * */
     void onHandlePick() {
       RaycastHit hit;
       Vector3 dir = transform.forward;
@@ -46,6 +57,12 @@ public class Weapon : MonoBehaviour {
       joint.connectedBody = null;
     }
 
+    /* Handle the intention of shoot. Asks the GameController if the shoot can
+     * be made (player has enough ammo) and uses a raycast as bullet.
+     *
+     * The bullet also adds a force to the object when impacting.
+     *
+     * */
     void onHandleShoot () {
       if (GameController.TryShoot (ammo_per_shot)) {
         RaycastHit hit;

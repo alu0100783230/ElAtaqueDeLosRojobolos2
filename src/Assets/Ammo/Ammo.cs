@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Simply in game ammo item
 public class Ammo : MonoBehaviour
 {
   public uint ammount;

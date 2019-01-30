@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* Used for GUI */
 public class Hub : MonoBehaviour
 {
 

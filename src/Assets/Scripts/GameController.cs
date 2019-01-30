@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -19,11 +20,13 @@ public class GameController : MonoBehaviour {
   static uint player_ammo;
   static uint max_player_ammo;
 
+
   private static AudioSource audio;
   private static AudioClip health_clip;
   private static AudioClip damage_clip;
   private static AudioClip reload_clip;
 
+  // Used to allow inspector tweak
   public AudioClip inspector_health_clip;
   public AudioClip inspector_damage_clip;
   public AudioClip inspector_reload_clip;
@@ -63,6 +66,7 @@ public class GameController : MonoBehaviour {
       audio = GetComponent<AudioSource> ();
     }
 
+    // Send an event to inform the enemies they can start seeking the player
     public static void CustomStart () {
       player = GameObject.FindGameObjectWithTag("Player");
       informPlayer (player);
@@ -74,8 +78,10 @@ public class GameController : MonoBehaviour {
 
     public static void onHandleLose () {
       Debug.Log ("YOU LOSE");
+      SceneManager.LoadScene("vr");
     }
 
+    // Manage damage
     public static void onDecreaseLife (float ammount) {
 
       audio.clip = damage_clip;
@@ -89,6 +95,7 @@ public class GameController : MonoBehaviour {
       Debug.Log ("Decreased life to " + player_life);
     }
 
+    // Manage health items. Returns true if should be destroyed.
     public static bool onIncreaseLife (float ammount) {
       if (player_life < max_player_life) {
         player_life += ammount;
@@ -110,6 +117,7 @@ public class GameController : MonoBehaviour {
         player_ammo -= ammount;
     }
 
+    // Manage ammo items. Returns true if should be destroyed.
     public static bool onIncreaseAmmo (uint ammount) {
       Debug.Log (player_ammo + " " + max_player_ammo);
       if (player_ammo < max_player_ammo) {
@@ -125,6 +133,7 @@ public class GameController : MonoBehaviour {
       return false;
     }
 
+    // Manage player ammo when shooting. Return true if the shoot should be made.
     public static bool TryShoot (uint ammount) {
       if (ammount > player_ammo)
         return false;
